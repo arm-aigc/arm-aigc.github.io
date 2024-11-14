@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+    content="We introduce ARM, a novel method that reconstructs high-quality 3D meshes and realistic appearance from sparse-view images.">
+  <meta name="keywords" content="ARM, LRM, PBR, aigc, 3dgen, appearance">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ARM: Appearance Reconstruction Model for Relightable 3D Generation</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-P5TW3NKDFW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-P5TW3NKDFW');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+</head>
+
+<body>
+
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <!-- <div class="navbar-menu">
+      <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+            More Relighting Research
+          </a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://nrhints.github.io/">
+              NRHints
+            </a>
+            <a class="navbar-item" href="https://dilightnet.github.io/">
+              DiLightNet
+            </a>
+          </div>
+        </div>
+      </div> -->
+
+    </div>
+  </nav>
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">ARM: Appearance Reconstruction Model for Relightable 3D Generation
+            </h1>
+            <h2 class="subtitle is-size-4 publication-venue"></h2>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://f1shel.github.io">Xiang Feng</a><sup>*1,2</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://changyu.io/">Chang Yu</a><sup>*3</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://github.com/RupertPaoZ">Zoubin Bi</a><sup>*2</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://shayito.github.io/">Yintong Shang</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://fen9.github.io/">Feng Gao</a><sup>4</sup>,
+              </span><br>
+              <span class="author-block">
+                <a href="https://svbrdf.github.io/">Hongzhi Wu</a><sup>2</sup>,
+              </span>
+              <span class="author-block">
+                <a href="http://kunzhou.net/">Kun Zhou</a><sup>2</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://www.math.ucla.edu/~cffjiang/">Chenfanfu Jiang</a><sup>3</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://yangzzzy.github.io/">Yin Yang</a><sup>1</sup>
+              </span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup>1</sup>University of Utah,</span>
+              <span class="author-block"><sup>2</sup>Zhejiang University,</span>
+              <span class="author-block"><sup>3</sup>UCLA,</span>
+              <span class="author-block"><sup>4</sup>Amazon</span>
+            </div>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">* Equal contribution.</span>
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- ArXiv Link. -->
+                <span class="link-block">
+                  <a href="" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+                <!-- PDF Link. -->
+                <span class="link-block">
+                  <a href="" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                <!-- Code Link. -->
+                <span class="link-block">
+                  <a href="" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <!-- <img src="./imgs/teaser.png" /> -->
+        <video poster="" id="view" autoplay muted loop playsinline height="100%" loading="lazy">
+          <source src="./imgs/view.mp4" type="video/mp4">
+        <h2 class="subtitle has-text-centered">
+          ARM generates high-quality, relightable 3D content from a single image input.
+        </h2>
+      </div>
+    </div>
+
+
+  </section>
+
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+
+        <div class="content has-text-justified">
+          <p>
+              Recent image-to-3D reconstruction models have greatly advanced geometry generation,
+              but they still struggle to faithfully generate realistic appearance.
+              To address this, we introduce ARM, a novel method that reconstructs high-quality 3D 
+              meshes and realistic appearance from sparse-view images. The core of ARM lies in 
+              decoupling geometry from appearance, processing appearance within the UV texture space. 
+              Unlike previous methods, ARM improves texture quality by explicitly back-projecting measurements 
+              onto the texture map and processing them in a UV space module with a global receptive field. 
+              To resolve ambiguities between material and illumination in input images, ARM introduces a 
+              material prior that encodes semantic appearance information, enhancing the robustness of 
+              appearance decomposition. Trained on just 8 H100 GPUs, ARM outperforms existing methods 
+              both quantitatively and qualitatively.
+          </p>
+        </div>
+        <div class="container is-max-desktop">
+          <div id="light1" class="content-tab">
+            <video poster="" id="light1" autoplay muted loop playsinline height="100%" loading="lazy">
+              <source src="./imgs/light1.mp4" type="video/mp4">
+          </div>
+          <div id="light2" class="content-tab">
+            <video poster="" id="light2" autoplay muted loop playsinline height="100%" loading="lazy">
+              <source src="./imgs/light2.mp4" type="video/mp4">
+          </div>
+          <div id="light3" class="content-tab">
+            <video poster="" id="light3" autoplay muted loop playsinline height="100%" loading="lazy">
+              <source src="./imgs/light3.mp4" type="video/mp4">
+          </div>
+          <div id="light4" class="content-tab">
+            <video poster="" id="light4" autoplay muted loop playsinline height="100%" loading="lazy">
+              <source src="./imgs/light4.mp4" type="video/mp4">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Overview of our pipeline</h2>
+          <div class="content has-text-justified">
+            <p>
+              <b>(left)</b> Starting from sparse-view input images generated by a diffusion model,
+              ARM separates shape and appearance generation into two stages. In the 
+              geometry stage, ARM uses GeoRM to predict a 3D shape from the input 
+              images. In the appearance stage, ARM employs InstantAlbedo and GlossyRM 
+              to reconstruct PBR maps, enabling realistic relighting under varied lighting conditions. 
+              <b>(right)</b> Both GeoRM and GlossyRM share the same architecture, consisting of a 
+              triplane synthesizer and a decoding MLP. GeoRM is trained to predict density 
+              and extracts an iso-surface from the density grid with DiffMC, while GlossyRM 
+              is trained to predict roughness and metalness. GlossyRM is trained after GeoRM 
+              and initializes with the weights of GeoRM at the start of training.
+            </p>
+          </div>
+        </div>
+      </div>
+      <img src="./imgs/geo_glossy_rm.png" />
+      <!--/ Abstract. -->
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Overview of InstantAlbedo</h2>
+          <div class="content has-text-justified">
+            <p>
+              InstantAlbedo operates in the texture UV space. This subprocess begins 
+              by converting all necessary data to UV texture space. Given the unwrapped 
+              mesh from GeoRM, we back-project images, material encodings, and auxiliary 
+              data into UV texture space, resulting in six sets of inputs corresponding 
+              to the six input views. InstantAlbedo then processes these maps using a U-Net 
+              and an inpainting-specific FFC-Net to predict both the lighting-baked color and 
+              the decomposed diffuse albedo UV textures.
+            </p>
+          </div>
+        </div>
+      </div>
+      <img src="./imgs/instantalbedo.png" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Single image to 3D</h2>
+          <div class="content has-text-justified">
+            <p>
+              We provide qualitative examples to visually demonstrate ARM’s superior performance 
+              over existing methods. The reconstructed textures from ARM contain significantly 
+              richer details, owing to our design in UV texture space. While other methods suffer 
+              from blurriness, ARM accurately reconstructs complex and sharp patterns. Some methods, 
+              such as SF3D, struggle to generate plausible shape and texture in unseen areas due to 
+              training on single-view inputs.
+            </p>
+          </div>
+        </div>
+      </div>
+      <img src="./imgs/visual_quality.jpg" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Appearance decomposition</h2>
+          <div class="content has-text-justified">
+            <p>
+              We compare our reconstructed PBR maps and their relighted images under novel lighting 
+              conditions to those produced by SF3D, which also reconstructs PBR from single-view input. 
+              Our method outperforms SF3D in two key areas: First, when multiple materials are present 
+              in the input image, our method reconstructs spatially-varying roughness and metalness, 
+              while SF3D generates only constant values, resulting in a homogeneous appearance. Second, 
+              SF3D struggles with separating illumination from material properties in the input, leading 
+              to baked-in lighting effects. In the cup and ball example, lighting artifacts are embedded 
+              in SF3D's reconstructed diffuse albedo, resulting in inaccurate relighting under novel conditions. 
+              In contrast, our method successfully decomposes illumination and material, yielding realistic results.
+            </p>
+          </div>
+        </div>
+      </div>
+      <img src="./imgs/pbr_quality.png" />
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This website is constructed using the source code provided by <a
+                href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>, and we are grateful for their template.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>

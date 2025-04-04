@@ -32,7 +32,7 @@
 <body>
 
   <section class="hero">
-    <div class="hero-body">
+    <div class="hero-body" style="padding-bottom: 24px;">
       <div class="container is-max-desktop">
         <div class="columns is-centered">
           <div class="column has-text-centered">
@@ -41,7 +41,7 @@
               <div class="subtitle is-size-2 publication-venue"
                    style="font-size: 50px; font-weight: bold; color: white;
         text-shadow: 0 0 5px #4b0082, 0 0 10px #6a0dad, 0 0 15px #9400d3, 0 0 20px #8a2be2;">
-                CVPR 2025
+                CVPR 2025 (Highlight)
               </div>
             <h2 class="subtitle is-size-4 publication-venue"></h2>
             <div class="is-size-5 publication-authors">
@@ -87,6 +87,23 @@
             <div class="column has-text-centered">
               <div class="publication-links">
                 <!-- ArXiv Link. -->
+                <!-- PDF Link. -->
+                <span class="link-block">
+                  <a href="https://drive.google.com/file/d/1bOnMAhbVbs32OAyMEDJAGUULHR5zpiRF/view" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Paper(15MB)</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="https://drive.google.com/file/d/1rCEd3xJeI65nez0rBpa-ZZuFMAqiVnxu/view" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Supp.(39MB)</span>
+                  </a>
+                </span>
                 <span class="link-block">
                   <a href="https://arxiv.org/abs/2411.10825" class="external-link button is-normal is-rounded is-dark">
                     <span class="icon">
@@ -95,22 +112,13 @@
                     <span>arXiv</span>
                   </a>
                 </span>
-                <!-- PDF Link. -->
-                <span class="link-block">
-                  <a href="https://arxiv.org/pdf/2411.10825" class="external-link button is-normal is-rounded is-dark">
-                    <span class="icon">
-                      <i class="fas fa-file-pdf"></i>
-                    </span>
-                    <span>Paper</span>
-                  </a>
-                </span>
                 <!-- Code Link. -->
                 <span class="link-block">
                   <a href="https://github.com/f1shel/arm-3dgen" class="external-link button is-normal is-rounded is-dark">
                     <span class="icon">
-                      <i class="fab fa-github"></i>
+                      <i class="fa fa-rocket"></i>
                     </span>
-                    <span>Code</span>
+                    <span>Demo</span>
                   </a>
                 </span>
               </div>
@@ -124,7 +132,7 @@
 
   <section class="hero teaser">
     <div class="container is-max-desktop">
-      <div class="hero-body">
+      <div class="hero-body" style="padding-bottom: 10px;">
         <!-- <img src="./imgs/teaser.png" /> -->
         <video poster="" id="view" autoplay muted loop playsinline height="100%" loading="lazy">
           <source src="./imgs/view.mp4" type="video/mp4">
@@ -137,51 +145,53 @@
 
   </section>
 
-  <div class="container is-max-desktop">
-    <!-- Abstract. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
+  <section class="section" style="padding-top: 24px; padding-bottom: 24px;">
+    <div class="container is-max-desktop">
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
 
-        <div class="content has-text-justified">
-          <p>
-              Recent image-to-3D reconstruction models have greatly advanced geometry generation,
-              but they still struggle to faithfully generate realistic appearance.
-              To address this, we introduce ARM, a novel method that reconstructs high-quality 3D 
-              meshes and realistic appearance from sparse-view images. The core of ARM lies in 
-              decoupling geometry from appearance, processing appearance within the UV texture space. 
-              Unlike previous methods, ARM improves texture quality by explicitly back-projecting measurements 
-              onto the texture map and processing them in a UV space module with a global receptive field. 
-              To resolve ambiguities between material and illumination in input images, ARM introduces a 
-              material prior that encodes semantic appearance information, enhancing the robustness of 
-              appearance decomposition. Trained on just 8 H100 GPUs, ARM outperforms existing methods 
-              both quantitatively and qualitatively.
-          </p>
-        </div>
-        <div class="container is-max-desktop">
-          <div id="light1" class="content-tab">
-            <video poster="" id="light1" autoplay muted loop playsinline height="100%" loading="lazy">
-              <source src="./imgs/light1.mp4" type="video/mp4">
+          <div class="content has-text-justified">
+            <p>
+                Recent image-to-3D reconstruction models have greatly advanced geometry generation,
+                but they still struggle to faithfully generate realistic appearance.
+                To address this, we introduce ARM, a novel method that reconstructs high-quality 3D 
+                meshes and realistic appearance from sparse-view images. The core of ARM lies in 
+                decoupling geometry from appearance, processing appearance within the UV texture space. 
+                Unlike previous methods, ARM improves texture quality by explicitly back-projecting measurements 
+                onto the texture map and processing them in a UV space module with a global receptive field. 
+                To resolve ambiguities between material and illumination in input images, ARM introduces a 
+                material prior that encodes semantic appearance information, enhancing the robustness of 
+                appearance decomposition. Trained on just 8 H100 GPUs, ARM outperforms existing methods 
+                both quantitatively and qualitatively.
+            </p>
           </div>
-          <div id="light2" class="content-tab">
-            <video poster="" id="light2" autoplay muted loop playsinline height="100%" loading="lazy">
-              <source src="./imgs/light2.mp4" type="video/mp4">
+          <div class="container is-max-desktop">
+            <div id="light1" class="content-tab">
+              <video poster="" id="light1" autoplay muted loop playsinline height="100%" loading="lazy">
+                <source src="./imgs/light1.mp4" type="video/mp4">
+            </div>
+            <div id="light2" class="content-tab">
+              <video poster="" id="light2" autoplay muted loop playsinline height="100%" loading="lazy">
+                <source src="./imgs/light2.mp4" type="video/mp4">
+            </div>
+            <div id="light3" class="content-tab">
+              <video poster="" id="light3" autoplay muted loop playsinline height="100%" loading="lazy">
+                <source src="./imgs/light3.mp4" type="video/mp4">
+            </div>
+            <div id="light4" class="content-tab">
+              <video poster="" id="light4" autoplay muted loop playsinline height="100%" loading="lazy">
+                <source src="./imgs/light4.mp4" type="video/mp4">
+            </div>
           </div>
-          <div id="light3" class="content-tab">
-            <video poster="" id="light3" autoplay muted loop playsinline height="100%" loading="lazy">
-              <source src="./imgs/light3.mp4" type="video/mp4">
-          </div>
-          <div id="light4" class="content-tab">
-            <video poster="" id="light4" autoplay muted loop playsinline height="100%" loading="lazy">
-              <source src="./imgs/light4.mp4" type="video/mp4">
-          </div>
-        </div>
 
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <section class="section">
+  <section class="section" style="padding-top: 24px; padding-bottom: 24px;">
     <div class="container is-max-desktop">
       <!-- Abstract. -->
       <div class="columns is-centered has-text-centered">
@@ -208,7 +218,7 @@
     </div>
   </section>
 
-  <section class="section">
+  <section class="section" style="padding-top: 24px; padding-bottom: 24px;">
     <div class="container is-max-desktop">
       <!-- Abstract. -->
       <div class="columns is-centered has-text-centered">
@@ -231,7 +241,7 @@
     </div>
   </section>
 
-  <section class="section">
+  <section class="section" style="padding-top: 24px; padding-bottom: 24px;">
     <div class="container is-max-desktop">
       <!-- Abstract. -->
       <div class="columns is-centered has-text-centered">
@@ -253,7 +263,7 @@
     </div>
   </section>
 
-  <section class="section">
+  <section class="section" style="padding-top: 24px; padding-bottom: 24px;">
     <div class="container is-max-desktop">
       <!-- Abstract. -->
       <div class="columns is-centered has-text-centered">
@@ -278,7 +288,7 @@
     </div>
   </section>
 
-  <section class="section" id="BibTeX">
+  <section class="section" id="BibTeX" style="padding-top: 24px; padding-bottom: 24px;">
     <div class="container is-max-desktop content">
       <h2 class="title">BibTeX</h2>
       <pre><code>@article{feng2024arm,
